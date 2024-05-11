@@ -3,12 +3,17 @@ mod system;
 
 // This is our main Runtime.
 // It accumulates all of the different pallets we want to use.
+
+mod types {
+	pub type AccountId = String;
+	pub type Balance = u128;
+}
 #[derive(Debug)]
 pub struct Runtime {
 	/* TODO: create a field `system` which is of type `system::Pallet`. */
 	system: system::Pallet,
 	/* TODO: create a field `balances` which is of type `balances::Pallet`. */
-	balances: balances::Pallet,
+	balances: balances::Pallet<types::AccountId, types::Balance>,
 }
 
 impl Runtime {
