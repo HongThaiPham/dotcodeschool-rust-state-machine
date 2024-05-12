@@ -125,14 +125,15 @@ fn main() {
 		extrinsics: vec![
 			support::Extrinsic {
 				caller: alice.clone(),
-				call: RuntimeCall::Balances(balances::Call::Transfer {
+				/* TODO: Update the enum name to match what is generated with the macro. */
+				call: RuntimeCall::Balances(balances::Call::transfer {
 					to: bob.clone(),
 					amount: 20,
 				}),
 			},
 			support::Extrinsic {
 				caller: alice.clone(),
-				call: RuntimeCall::Balances(balances::Call::Transfer { to: charlie, amount: 20 }),
+				call: RuntimeCall::Balances(balances::Call::transfer { to: charlie, amount: 20 }),
 			},
 		],
 	};
@@ -173,6 +174,8 @@ fn main() {
 		],
 	};
 
+	// Execute the extrinsics which make up our blocks.
+	// If there are any errors, our system panics, since we should not execute invalid blocks.
 	runtime.execute_block(block_1).expect("invalid block");
 	runtime.execute_block(block_2).expect("invalid block");
 	runtime.execute_block(block_3).expect("invalid block");
