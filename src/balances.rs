@@ -3,11 +3,6 @@ use std::collections::BTreeMap;
 
 /// The configuration trait for the Balances Module.
 /// Contains the basic types needed for handling balances.
-/*
-	TODO:
-	Tightly couple balances to the system pallet by inheriting the `system::Config` trait.
-	After this, you won't need the `AccountId` type redefined here.
-*/
 pub trait Config: crate::system::Config {
 	/// A type which can represent the balance of an account.
 	/// Usually this is a large unsigned integer.
@@ -43,12 +38,13 @@ impl<T: Config> Pallet<T> {
 	/// Transfer `amount` from one account to another.
 	/// This function verifies that `from` has at least `amount` balance to transfer,
 	/// and that no mathematical overflows occur.
+	/* TODO: Update the function signature to return a `DispatchResult`. */
 	pub fn transfer(
 		&mut self,
 		caller: T::AccountId,
 		to: T::AccountId,
 		amount: T::Balance,
-	) -> Result<(), &'static str> {
+	) -> crate::support::DispatchResult {
 		let caller_balance = self.balance(&caller);
 		let to_balance = self.balance(&to);
 
@@ -66,7 +62,6 @@ impl<T: Config> Pallet<T> {
 mod tests {
 	struct TestConfig;
 
-	/* TODO: Implement `crate::system::Config` for `TestConfig` to make your tests work again. */
 	impl crate::system::Config for TestConfig {
 		type AccountId = String;
 		type BlockNumber = u32;
