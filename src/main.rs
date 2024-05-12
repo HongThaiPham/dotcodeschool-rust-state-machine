@@ -125,7 +125,6 @@ fn main() {
 		extrinsics: vec![
 			support::Extrinsic {
 				caller: alice.clone(),
-				/* TODO: Update the enum name to match what is generated with the macro. */
 				call: RuntimeCall::Balances(balances::Call::transfer {
 					to: bob.clone(),
 					amount: 20,
@@ -138,18 +137,19 @@ fn main() {
 		],
 	};
 
+	/* TODO: Update the extrinsics below for the updated format after the macros. */
 	let block_2 = types::Block {
 		header: support::Header { block_number: 2 },
 		extrinsics: vec![
 			support::Extrinsic {
 				caller: alice.clone(),
-				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::CreateClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::create_claim {
 					claim: &"Hello, world!",
 				}),
 			},
 			support::Extrinsic {
 				caller: bob.clone(),
-				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::CreateClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::create_claim {
 					claim: &"Hello, world!",
 				}),
 			},
@@ -161,13 +161,13 @@ fn main() {
 		extrinsics: vec![
 			support::Extrinsic {
 				caller: alice,
-				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::RevokeClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::revoke_claim {
 					claim: &"Hello, world!",
 				}),
 			},
 			support::Extrinsic {
 				caller: bob,
-				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::CreateClaim {
+				call: RuntimeCall::ProofOfExistence(proof_of_existence::Call::create_claim {
 					claim: &"Hello, world!",
 				}),
 			},
